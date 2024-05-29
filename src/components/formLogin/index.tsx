@@ -43,9 +43,7 @@ export function FormLogin() {
           </label>
           <span className="inputError">{errors.email?.message}</span>
         </section>
-      </form>
 
-      <form>
         <section>
           <label>
             Senha:

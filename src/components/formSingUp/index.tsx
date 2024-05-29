@@ -23,6 +23,7 @@ export function FormSignUp() {
     reset();
     navigate("/");
   };
+
   return (
     <Container>
       <h2>Faça seu cadastro!</h2>
@@ -59,9 +60,7 @@ export function FormSignUp() {
           </label>
           <span className="inputError">{errors.email?.message}</span>
         </section>
-      </form>
 
-      <form>
         <section>
           <label>
             Senha:
