@@ -26,7 +26,7 @@ export function FormLogin() {
   };
   return (
     <Container>
-      <h2>Faça seu login!</h2>
+      <h2>Faça seu login</h2>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <section>

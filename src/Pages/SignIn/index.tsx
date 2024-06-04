@@ -2,8 +2,22 @@ import { Link } from "react-router-dom";
 import { Container } from "./style";
 import logo from "../../assets/logo-reprograma-jucas.png";
 import { FormLogin } from "../../components/formLogin";
+import { useEffect, useState } from "react";
 
 export function SignIn() {
+  const [deley, setDeley] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDeley(false);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (deley) {
+    return null;
+  }
   return (
     <Container>
       <div className="signInPart1">

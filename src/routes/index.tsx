@@ -1,6 +1,13 @@
-import { RouterProvider } from "react-router-dom";
-import { authRouter } from "./auth.routes";
+import { BrowserRouter } from "react-router-dom";
+import { AuthRouter } from "./auth.routes";
+import { AppRouter } from "./app.routes";
+import { useAuth } from "../hooks/useAuth";
+
+const { authUserID } = useAuth(); 
+const isAuth = !!authUserID;
+
+const routes = isAuth ? <AppRouter /> : <AuthRouter />;
 
 export function AppRoutes() {
-    return <RouterProvider router={authRouter}></RouterProvider>
+  return <BrowserRouter>{routes}</BrowserRouter>;
 }

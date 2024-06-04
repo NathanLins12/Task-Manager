@@ -1,4 +1,4 @@
-import { PropsWithChildren, createContext, useState } from "react";
+import { PropsWithChildren, createContext, useEffect, useState } from "react";
 import { API } from "../configs/api";
 
 export type signInTypes = {
@@ -17,12 +17,14 @@ type AuthContextTypes = {
   signUp: (params: signUpTypes) => Promise<boolean | void>;
   isLoading: boolean;
   signOut: () => void;
+  authUserID: string;
 };
 
 export const AuthContext = createContext({} as AuthContextTypes);
 
 export function AuthProvider({ children }: PropsWithChildren) {
   const [isLoading, setIsLoading] = useState(false);
+  const [authUserID, setAuthUserID] = useState("");
 
   async function signIn({ email, password }: signInTypes) {
     if (!email || !password) throw alert("Por favor informar email e senha!");
@@ -31,9 +33,11 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
     return API.post("/login", { email, password })
       .then((response) => {
-        const userID = { userID: response.data.id };
+        const userID = response.data.id;
 
-        localStorage.setItem("@Task_Manager:user", JSON.stringify(userID));
+        setAuthUserID(userID);
+
+        localStorage.setItem("@Task_Manager:userID", JSON.stringify(userID));
         return true;
       })
       .catch((error) => {
@@ -77,11 +81,23 @@ export function AuthProvider({ children }: PropsWithChildren) {
   }
 
   function signOut() {
-    localStorage.removeItem("@Task_Manager:user");
+    localStorage.removeItem("@Task_Manager:userID");
+    setAuthUserID("");
+    // remove cookie
   }
 
+  useEffect(() => {
+    const userID = localStorage.getItem("@Task_Manager:userID");
+    if (userID) {
+      // get user in API
+      setAuthUserID(userID);
+    }
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ signIn, isLoading, signUp, signOut }}>
+    <AuthContext.Provider
+      value={{ signIn, isLoading, signUp, signOut, authUserID }}
+    >
       {children}
     </AuthContext.Provider>
   );
