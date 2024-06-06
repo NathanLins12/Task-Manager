@@ -83,14 +83,24 @@ export function AuthProvider({ children }: PropsWithChildren) {
   function signOut() {
     localStorage.removeItem("@Task_Manager:userID");
     setAuthUserID("");
-    // remove cookie
+    API.post("/logout").catch((error) => {
+      console.log(error);
+    });
   }
 
   useEffect(() => {
     const userID = localStorage.getItem("@Task_Manager:userID");
     if (userID) {
-      // get user in API
-      setAuthUserID(userID);
+      const id = JSON.parse(userID);
+
+      API.post("/user")
+        .then((respose) => {
+          if (id == respose.data.id) setAuthUserID(userID);
+        })
+        .catch((error) => {
+          console.log(error);
+          if (error.response?.status == 401) signOut();
+        });
     }
   }, []);
 
