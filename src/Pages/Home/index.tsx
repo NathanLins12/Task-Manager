@@ -11,7 +11,7 @@ export function Home() {
     <Container>
       <h2>Tarefas</h2>
 
-      <div className="StatsContainer">
+      <div className="statsContainer">
         <NavLink to={"/tasks"}>
           <StatsCard
             title="Completadas"

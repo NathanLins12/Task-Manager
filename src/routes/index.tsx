@@ -5,7 +5,7 @@ import { useAuth } from "../hooks/useAuth";
 
 export function AppRoutes() {
   const { authUserID } = useAuth();
-  const isAuth = !authUserID;
+  const isAuth = !!authUserID;
   const routes = isAuth ? <AppRouter /> : <AuthRouter />;
   return <BrowserRouter>{routes}</BrowserRouter>;
 }

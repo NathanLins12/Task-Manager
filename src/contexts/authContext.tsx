@@ -93,9 +93,9 @@ export function AuthProvider({ children }: PropsWithChildren) {
     if (userID) {
       const id = JSON.parse(userID);
 
-      API.post("/user")
+      API.get("/user")
         .then((respose) => {
-          if (id == respose.data.id) setAuthUserID(userID);
+            if (id == respose.data.id) setAuthUserID(userID);
         })
         .catch((error) => {
           console.log(error);
