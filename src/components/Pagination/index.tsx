@@ -26,10 +26,10 @@ export function Pagination({
       <div className="limitBox">
         <span>Quantidade por página</span>
         <select defaultValue={step * 2} onChange={handleChangeLimit}>
-          <option value={step * 1}></option>
-          <option value={step * 2}></option>
-          <option value={step * 3}></option>
-          <option value={step * 4}></option>
+          <option value={step * 1}>{step * 1}</option>
+          <option value={step * 2}>{step * 2}</option>
+          <option value={step * 3}>{step * 3}</option>
+          <option value={step * 4}>{step * 4}</option>
         </select>
       </div>
 
