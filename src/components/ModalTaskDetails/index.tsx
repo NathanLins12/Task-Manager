@@ -1,5 +1,6 @@
 import { Container } from "./style";
 import { TaskDataTypes } from "../TaskCard";
+import { FormMutationTask } from "../FormMutationTask";
 
 type ModalTaskDetailsTypes = {
   toggleModal?: () => void;
@@ -17,7 +18,11 @@ export function ModalTaskDetails({ toggleModal, task }: ModalTaskDetailsTypes) {
               close
             </i>
           </div>
-          {task.title}
+          <FormMutationTask
+            isUpdate={true}
+            toggleModal={toggleModal}
+            taskData={task}
+          />
         </div>
       </div>
     </Container>
