@@ -62,7 +62,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
     return API.post("/user", { name, email, password })
       .then((response) => {
-        alert(response?.data.message);
+        alert("Usuário criado!");
 
         return true;
       })
