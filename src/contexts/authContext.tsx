@@ -1,20 +1,20 @@
 import { PropsWithChildren, createContext, useEffect, useState } from "react";
 import { API } from "../configs/api";
 
-export type signInTypes = {
+export type SignInTypes = {
   email: string;
   password: string;
 };
 
-export type signUpTypes = {
+export type SignUpTypes = {
   name: string;
   email: string;
   password: string;
 };
 
 type AuthContextTypes = {
-  signIn: (params: signInTypes) => Promise<boolean | void>;
-  signUp: (params: signUpTypes) => Promise<boolean | void>;
+  signIn: (params: SignInTypes) => Promise<boolean | void>;
+  signUp: (params: SignUpTypes) => Promise<boolean | void>;
   isLoading: boolean;
   signOut: () => void;
   authUserID: string;
@@ -26,25 +26,26 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const [isLoading, setIsLoading] = useState(false);
   const [authUserID, setAuthUserID] = useState("");
 
-  async function signIn({ email, password }: signInTypes) {
+  async function signIn({ email, password }: SignInTypes) {
     if (!email || !password) throw alert("Por favor informar email e senha!");
 
     setIsLoading(true);
 
     return API.post("/login", { email, password })
-      .then((response) => {
-        const userID = response.data.id;
+      .then((res) => {
+        const userID = res.data.id;
 
         setAuthUserID(userID);
 
-        localStorage.setItem("@Task_Manager:userID", JSON.stringify(userID));
+        localStorage.setItem("@task_manager:userID", JSON.stringify(userID));
+
         return true;
       })
       .catch((error) => {
-        if (error.reponse) {
+        if (error.response) {
           alert(error.response.data.message);
         } else {
-          alert("Ocorreu um erro inesperado no login!");
+          alert("Um erro inesperado no login!");
         }
 
         console.error(error);
@@ -54,23 +55,22 @@ export function AuthProvider({ children }: PropsWithChildren) {
       });
   }
 
-  async function signUp({ name, email, password }: signUpTypes) {
+  async function signUp({ name, email, password }: SignUpTypes) {
     if (!name || !email || !password)
       throw alert("Por favor informar nome, email e senha!");
 
     setIsLoading(true);
 
     return API.post("/user", { name, email, password })
-      .then(() => {
-        alert("Usuário criado!");
-
+      .then((res) => {
+        alert(res?.data.message);
         return true;
       })
       .catch((error) => {
-        if (error.reponse) {
+        if (error.response) {
           alert(error.response.data.message);
         } else {
-          alert("Ocorreu um erro ao criar o usuário!");
+          alert("Um erro inesperado ao criar usuário!");
         }
 
         console.error(error);
@@ -81,24 +81,25 @@ export function AuthProvider({ children }: PropsWithChildren) {
   }
 
   function signOut() {
-    localStorage.removeItem("@Task_Manager:userID");
+    localStorage.removeItem("@task_manager:userID");
     setAuthUserID("");
     API.post("/logout").catch((error) => {
-      console.log(error);
+      console.error(error);
     });
   }
 
   useEffect(() => {
-    const userID = localStorage.getItem("@Task_Manager:userID");
+    const userID = localStorage.getItem("@task_manager:userID");
+
     if (userID) {
       const id = JSON.parse(userID);
 
       API.get("/user")
-        .then((respose) => {
-          if (id == respose.data.id) setAuthUserID(userID);
+        .then((res) => {
+          if (id == res.data.id) setAuthUserID(userID);
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
           if (error.response?.status == 401) signOut();
         });
     }

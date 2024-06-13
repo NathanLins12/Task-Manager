@@ -7,20 +7,18 @@ async function updateTask(task: TaskDataTypes) {
   return await API.put(`/task/${id}`, { title, description, date, status });
 }
 
-export function usetaskUpdate() {
+export function useTaskUpdate() {
   const mutate = useMutation({
     mutationFn: updateTask,
-    onSuccess: (response) => {
-      if (response.status == 201) {
-        alert("Tarefa atualizada!");
+    onSuccess: (res) => {
+      if (res.status == 200) {
+        alert("Tarefa atualizada com sucesso!");
       }
     },
     onError: (error) => {
       console.error(error);
-
       alert("Erro ao atualizar tarefa!");
     },
   });
-
   return mutate;
 }

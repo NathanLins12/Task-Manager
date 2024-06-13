@@ -7,20 +7,18 @@ async function createTask(task: TaskDataTypes) {
   return await API.post("/task", { title, description, date, status });
 }
 
-export function usetaskCreate() {
+export function useTaskCreate() {
   const mutate = useMutation({
     mutationFn: createTask,
-    onSuccess: (response) => {
-      if (response.status == 201) {
-        alert("Tarefa criada!");
+    onSuccess: (res) => {
+      if (res.status == 201) {
+        alert("Tarefa criada com sucesso!");
       }
     },
     onError: (error) => {
       console.error(error);
-
       alert("Erro ao criar tarefa!");
     },
   });
-
   return mutate;
 }
