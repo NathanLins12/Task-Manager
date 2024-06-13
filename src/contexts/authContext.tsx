@@ -61,7 +61,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
     setIsLoading(true);
 
     return API.post("/user", { name, email, password })
-      .then((response) => {
+      .then(() => {
         alert("Usuário criado!");
 
         return true;
@@ -95,7 +95,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
       API.get("/user")
         .then((respose) => {
-            if (id == respose.data.id) setAuthUserID(userID);
+          if (id == respose.data.id) setAuthUserID(userID);
         })
         .catch((error) => {
           console.log(error);

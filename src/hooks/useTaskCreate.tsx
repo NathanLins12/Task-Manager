@@ -16,9 +16,11 @@ export function usetaskCreate() {
       }
     },
     onError: (error) => {
+      console.log(error);
+
       alert("Erro ao criar tarefa!");
     },
   });
-  
+
   return mutate;
 }
