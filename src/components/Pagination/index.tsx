@@ -13,29 +13,31 @@ type PaginationProps = {
 export function Pagination({
   page,
   step = 5,
-  changeLimit,
+  totalPages,
   prevPage,
   nextPage,
-  totalPages,
+  changeLimit,
 }: PaginationProps) {
   function handleChangeLimit(event: ChangeEvent<HTMLSelectElement>) {
     changeLimit(Number(event.target.value));
   }
+
   return (
     <Container>
       <div className="limitBox">
-        <span>Quantidade por página</span>
-        <select defaultValue={step * 2} onChange={handleChangeLimit}>
-          <option value={step * 1}>{step * 1}</option>
-          <option value={step * 2}>{step * 2}</option>
-          <option value={step * 3}>{step * 3}</option>
-          <option value={step * 4}>{step * 4}</option>
+        <span>Quantidade por página: </span>
+
+        <select onChange={handleChangeLimit} defaultValue={step * 2}>
+          <option>{step * 1}</option>
+          <option>{step * 2}</option>
+          <option>{step * 3}</option>
+          <option>{step * 4}</option>
         </select>
       </div>
 
       <div className="pageNumbers">
         <span>{totalPages ? page : "-"}</span>
-        <span>/</span>
+        <span> / </span>
         <span>{totalPages || "-"}</span>
       </div>
 

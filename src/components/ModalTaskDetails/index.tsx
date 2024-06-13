@@ -1,28 +1,48 @@
 import { Container } from "./style";
-import { TaskDataTypes } from "../TaskCard";
 import { FormMutationTask } from "../FormMutationTask";
+import { useEffect } from "react";
 
-type ModalTaskDetailsTypes = {
-  toggleModal?: () => void;
-  task: TaskDataTypes;
+type HandleTaskProps = {
+  toggleModal: () => void;
 };
 
-export function ModalTaskDetails({ toggleModal, task }: ModalTaskDetailsTypes) {
+export function ModalTaskDetails({ toggleModal }: HandleTaskProps) {
+  function handleKeyUp(event: React.KeyboardEvent<HTMLDivElement>) {
+    if (event.key == "Enter") {
+      toggleModal();
+    }
+  }
+
+  useEffect(() => {
+    function handleKeyUp(event: KeyboardEvent) {
+      if (event.key == "Escape") {
+        toggleModal();
+      }
+    }
+
+    window.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, [toggleModal]);
+
   return (
     <Container onClick={toggleModal}>
       <div className="handleTaskContainer" onClick={toggleModal}>
         <div className="formContainer">
           <div className="headerForm">
             <h2>Detalhes da tarefa</h2>
-            <i className="material-icons closeIcon" onClick={toggleModal}>
+            <i
+              className="material-icons closeIcon"
+              onClick={toggleModal}
+              onKeyUp={handleKeyUp}
+              tabIndex={0}
+            >
               close
             </i>
           </div>
-          <FormMutationTask
-            isUpdate={true}
-            toggleModal={toggleModal}
-            taskData={task}
-          />
+          <FormMutationTask isUpdate={true} toggleModal={toggleModal} />
         </div>
       </div>
     </Container>

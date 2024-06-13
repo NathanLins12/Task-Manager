@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router-dom";
-import { Home } from "../Pages/Home";
-import { Page404 } from "../Pages/Page404";
-import { App } from "../Pages/App";
-import { Tasks } from "../Pages/Tasks";
-import { CreateTask } from "../Pages/CreateTask";
-import { About } from "../Pages/About";
+import { App } from "../pages/App";
+import { Page404 } from "../pages/Page404";
+import { Home } from "../pages/Home";
+import { Tasks } from "../pages/Tasks";
+import { CreateTasks } from "../pages/CreateTasks";
+import { About } from "../pages/About";
 
 export function AppRouter() {
   return (
@@ -12,7 +12,7 @@ export function AppRouter() {
       <Route path="/" element={<App />}>
         <Route path="/" element={<Home />} />
         <Route path="/tasks" element={<Tasks />} />
-        <Route path="/create-task" element={<CreateTask />} />
+        <Route path="/create-tasks" element={<CreateTasks />} />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<Page404 />} />
       </Route>
