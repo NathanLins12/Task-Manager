@@ -16,7 +16,7 @@ export function usetaskCreate() {
       }
     },
     onError: (error) => {
-      console.log(error);
+      console.error(error);
 
       alert("Erro ao criar tarefa!");
     },

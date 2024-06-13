@@ -16,7 +16,7 @@ export function usetaskUpdate() {
       }
     },
     onError: (error) => {
-      console.log(error);
+      console.error(error);
 
       alert("Erro ao atualizar tarefa!");
     },
